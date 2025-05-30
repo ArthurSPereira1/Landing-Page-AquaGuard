@@ -91,20 +91,48 @@
         </header>
 
         <main>
-            <!-- hero Section -->
-            <section id="hero" class="hero-section">
-                <div class="hero-overlay"></div>
-                <div class="hero-content">
-                    <div class="hero-logo">
-                        <img src="images/aquaguard_logo.png" alt="AquaGuard Logo">
-                    </div>
-                    <h1 class="hero-title">AQUAGUARD</h1>
-                    <p class="hero-subtitle">PROTEÇÃO E ALERTA CONTRA ENCHENTES</p>
+            <!-- hero com slideshow -->
+        <section id="hero" class="hero-section">
+            <div class="slideshow-container">
+            
+                <div class="slide fade">
+                    <img src="images/hero_image.png" alt="Área urbana afetada por enchente">
+                    <div class="hero-overlay"></div>
                 </div>
-                <div class="scroll-indicator">
-                    <span class="scroll-arrow"></span>
+                
+                <div class="slide fade">
+                    <img src="images/hero_image2.webp" alt="Vista aérea de cidade inundada">
+                    <div class="hero-overlay"></div>
                 </div>
-            </section>
+                
+                <div class="slide fade">
+                    <img src="images/hero_image3.jpg" alt="Equipes de resgate durante enchente">
+                    <div class="hero-overlay"></div>
+                </div>
+                
+                <!-- navegação -->
+                <button class="slideshow-prev" aria-label="Slide anterior">&lt;</button>
+                <button class="slideshow-next" aria-label="Próximo slide">&gt;</button>
+            </div>
+            
+            <!-- Indicadores de slide -->
+            <div class="slideshow-indicators">
+                <button class="indicator active" data-slide="0" aria-label="Slide 1"></button>
+                <button class="indicator" data-slide="1" aria-label="Slide 2"></button>
+                <button class="indicator" data-slide="2" aria-label="Slide 3"></button>
+            </div>
+            
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="images/aquaguard_logo.png" alt="AquaGuard Logo">
+                </div>
+                <h1 class="hero-title">AQUAGUARD</h1>
+                <p class="hero-subtitle">PROTEÇÃO E ALERTA CONTRA ENCHENTES</p>
+            </div>
+            <div class="scroll-indicator">
+                <span class="scroll-arrow"></span>
+            </div>
+        </section>
 
             <!-- Seção 1: O problema -->
             <section id="problema" class="section problema">
