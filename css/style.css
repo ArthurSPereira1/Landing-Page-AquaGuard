@@ -922,3 +922,249 @@ body.has-banner .header {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
 }
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) rotate(45deg);
+  }
+  40% {
+    transform: translateY(-10px) rotate(45deg);
+  }
+  60% {
+    transform: translateY(-5px) rotate(45deg);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  h2 {
+    font-size: 2.8rem;
+  }
+  
+  .hero-title {
+    font-size: 4rem;
+  }
+  
+  .section-content {
+    gap: 50px;
+  }
+  
+  .main-nav ul {
+    gap: 20px;
+  }
+  
+  .signup-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .signup-button {
+    grid-column: span 1;
+  }
+  
+  .form-group:nth-child(5) {
+    grid-column: span 1;
+  }
+  
+  .slideshow-prev,
+  .slideshow-next {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .slideshow-indicators {
+    bottom: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 0;
+  }
+  
+  .mobile-menu-toggle {
+    display: flex;
+  }
+  
+  .main-nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    height: 100vh;
+    background-color: var(--white-color);
+    box-shadow: var(--box-shadow);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .theme-dark .main-nav {
+    background-color: var(--dark-color);
+  }
+  
+  .theme-light .main-nav {
+    background-color: var(--light-color);
+  }
+  
+  .main-nav.active {
+    left: 0;
+  }
+  
+  .main-nav ul {
+    flex-direction: column;
+    padding: 80px 0 30px;
+    gap: 0;
+  }
+  
+  .main-nav ul li {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .main-nav ul li a {
+    display: block;
+    padding: 15px 0;
+  }
+  
+  .logo-nav {
+    margin: 20px 0;
+  }
+  
+  h2 {
+    font-size: 2.2rem;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .section {
+    padding: 70px 0;
+  }
+  
+  .section-content {
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .divider-title {
+    font-size: 2rem;
+  }
+  
+  .cta-title {
+    font-size: 2.5rem;
+  }
+  
+  .quiz-container {
+    padding: 20px;
+  }
+  
+  .signup-banner {
+    padding: 15px 0;
+  }
+  
+  .signup-header h3 {
+    font-size: 1.3rem;
+  }
+  
+  .signup-header p {
+    font-size: 0.9rem;
+  }
+  
+  .slideshow-prev,
+  .slideshow-next {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .slideshow-prev {
+    left: 10px;
+  }
+  
+  .slideshow-next {
+    right: 10px;
+  }
+  
+  .slideshow-indicators {
+    bottom: 60px;
+  }
+  
+  .indicator {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 20px;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-logo img {
+    max-width: 150px;
+  }
+  
+  .section-header {
+    margin-bottom: 40px;
+  }
+  
+  .divider-title {
+    font-size: 1.8rem;
+  }
+  
+  .cta-title {
+    font-size: 2rem;
+  }
+  
+  .cta-button {
+    padding: 12px 30px;
+  }
+  
+  .theme-selectors {
+    right: 70px;
+  }
+  
+  .modal-content {
+    padding: 30px 20px;
+  }
+  
+  .slideshow-indicators {
+    bottom: 40px;
+  }
+  
+  .indicator {
+    width: 8px;
+    height: 8px;
+  }
+}
