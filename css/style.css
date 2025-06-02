@@ -855,3 +855,70 @@ body.has-banner .header {
   text-align: center;
   transition: background-color 0.5s ease;
 }
+
+.cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--white-color);
+}
+
+.cta-text {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: var(--accent-color);
+  color: var(--white-color);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+}
+
+.cta-button:hover {
+  background-color: var(--white-color);
+  color: var(--dark-color);
+  transform: translateY(-3px);
+}
+
+/* Footer */
+.footer {
+  padding: 80px 0;
+  background-color: var(--text-color);
+  color: var(--white-color);
+  transition: background-color 0.5s ease;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-logo {
+  margin-bottom: 30px;
+}
+
+.footer-logo img {
+  height: 60px;
+  width: auto;
+}
+
+.footer-info p {
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
