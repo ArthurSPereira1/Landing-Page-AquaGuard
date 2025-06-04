@@ -166,6 +166,83 @@ document.addEventListener('DOMContentLoaded', function() {
         slideshowContainer.addEventListener('mouseleave', startSlideshow);
     }
     
-
+    
 
 });
+
+// ===== MENU HAMBÚRGUER MOBILE =====
+    
+    // Selecionar elementos do menu mobile
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Função para alternar o menu mobile
+    function toggleMobileMenu() {
+        menuToggle.classList.toggle('active');
+        mainNav.classList.toggle('active');
+        
+        // Adicionar/remover scroll do body quando o menu está aberto/fechado
+        if (mainNav.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+    
+    // Adicionar evento de clique ao botão do menu
+    if (menuToggle) {
+        menuToggle.addEventListener('click', toggleMobileMenu);
+    }
+    
+    // Fechar o menu ao clicar em um link
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768 && mainNav.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+    });
+    
+    // ===== SELETORES DE TEMA =====
+    
+    // Selecionar botões de tema
+    const themeButtons = document.querySelectorAll('.theme-btn');
+    
+    // Função para alterar o tema
+    function changeTheme(theme) {
+        // Remover todas as classes de tema
+        document.body.classList.remove('theme-dark', 'theme-light');
+        
+        // Adicionar a classe do tema selecionado (se não for o padrão)
+        if (theme !== 'default') {
+            document.body.classList.add(`theme-${theme}`);
+        }
+        
+        // Atualizar botão ativo
+        themeButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-theme') === theme) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Salvar preferência no localStorage
+        localStorage.setItem('aquaguard-theme', theme);
+    }
+    
+    // Adicionar evento de clique aos botões de tema
+    themeButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const theme = this.getAttribute('data-theme');
+            changeTheme(theme);
+        });
+    });
+    
+    // Verificar tema salvo no localStorage
+    const savedTheme = localStorage.getItem('aquaguard-theme');
+    if (savedTheme) {
+        changeTheme(savedTheme);
+    } else {
+        // Definir tema padrão como ativo
+        document.querySelector('.theme-btn[data-theme="default"]').classList.add('active');
+    }
