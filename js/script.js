@@ -1,3 +1,7 @@
+// Script para destacar a seção atual no menu de navegação, animar elementos, 
+// controlar menu hambúrguer, implementar quiz e troca de temas, gerenciar o banner de cadastro
+// e controlar o slideshow na hero section
+
 document.addEventListener('DOMContentLoaded', function() {
     // ===== NAVEGAÇÃO E ANIMAÇÕES =====
     
@@ -69,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
     // ===== SLIDESHOW HERO =====
     
     // Selecionar elementos do slideshow
@@ -166,11 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
         slideshowContainer.addEventListener('mouseleave', startSlideshow);
     }
     
-    
-
-});
-
-// ===== MENU HAMBÚRGUER MOBILE =====
+    // ===== MENU HAMBÚRGUER MOBILE =====
     
     // Selecionar elementos do menu mobile
     const menuToggle = document.querySelector('.mobile-menu-toggle');
@@ -246,6 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Definir tema padrão como ativo
         document.querySelector('.theme-btn[data-theme="default"]').classList.add('active');
     }
+    
     // ===== BANNER DE CADASTRO =====
     
     // Selecionar elementos do banner
@@ -463,3 +465,325 @@ document.addEventListener('DOMContentLoaded', function() {
     // Ajustar posição do header quando a janela é redimensionada
     window.addEventListener('resize', adjustHeaderPosition);
     
+    // ===== QUIZ INTERATIVO =====
+    
+    // Dados do quiz
+    const quizData = [
+        {
+            question: "Qual é a principal causa de enchentes em áreas urbanas?",
+            options: [
+                "Chuvas intensas e impermeabilização do solo",
+                "Terremotos e tsunamis",
+                "Derretimento de geleiras",
+                "Erupções vulcânicas"
+            ],
+            correct: 0
+        },
+        {
+            question: "O que é um plano de evacuação?",
+            options: [
+                "Um documento que registra áreas já inundadas",
+                "Um roteiro com rotas e procedimentos para sair de áreas de risco",
+                "Um sistema de drenagem para águas pluviais",
+                "Um método para construir casas à prova d'água"
+            ],
+            correct: 1
+        },
+        {
+            question: "Qual item NÃO deve estar em um kit de emergência para enchentes?",
+            options: [
+                "Lanternas e pilhas extras",
+                "Documentos importantes em embalagem impermeável",
+                "Aparelhos eletrônicos pesados",
+                "Água potável e alimentos não perecíveis"
+            ],
+            correct: 2
+        },
+        {
+            question: "Qual ação é recomendada durante uma enchente?",
+            options: [
+                "Tentar dirigir através de áreas alagadas",
+                "Permanecer em locais altos e evitar contato com a água",
+                "Usar elevadores em prédios com risco de inundação",
+                "Ligar aparelhos elétricos para verificar se funcionam"
+            ],
+            correct: 1
+        },
+        {
+            question: "Qual é a profundidade de água que pode fazer um carro flutuar?",
+            options: [
+                "Aproximadamente 15 centímetros",
+                "Aproximadamente 30 centímetros",
+                "Aproximadamente 60 centímetros",
+                "Aproximadamente 1 metro"
+            ],
+            correct: 1
+        },
+        {
+            question: "Qual doença NÃO está associada ao contato com água de enchentes?",
+            options: [
+                "Leptospirose",
+                "Hepatite A",
+                "Diabetes",
+                "Doenças diarreicas"
+            ],
+            correct: 2
+        },
+        {
+            question: "O que é um sistema de alerta precoce para enchentes?",
+            options: [
+                "Um tipo de barragem que impede inundações",
+                "Um mecanismo que detecta e avisa sobre possíveis enchentes antes que ocorram",
+                "Um método de construção de casas elevadas",
+                "Um seguro residencial contra danos causados por água"
+            ],
+            correct: 1
+        },
+        {
+            question: "Qual medida ajuda a prevenir enchentes em áreas urbanas?",
+            options: [
+                "Aumentar a impermeabilização do solo",
+                "Remover árvores e vegetação",
+                "Implementar sistemas de drenagem sustentável e áreas permeáveis",
+                "Construir mais estradas asfaltadas"
+            ],
+            correct: 2
+        },
+        {
+            question: "O que deve ser feito com alimentos que tiveram contato com água de enchente?",
+            options: [
+                "Lavar bem e consumir imediatamente",
+                "Ferver por 5 minutos antes de consumir",
+                "Secar ao sol e depois consumir",
+                "Descartar, pois podem estar contaminados"
+            ],
+            correct: 3
+        },
+        {
+            question: "Qual é a melhor fonte de informações durante uma emergência de enchente?",
+            options: [
+                "Redes sociais não oficiais",
+                "Autoridades locais, defesa civil e meteorologia",
+                "Observação pessoal do nível da água",
+                "Perguntar aos vizinhos"
+            ],
+            correct: 1
+        }
+    ];
+    
+    // Elementos do quiz
+    const quizStart = document.getElementById('quiz-start');
+    const quizQuestions = document.getElementById('quiz-questions');
+    const quizResults = document.getElementById('quiz-results');
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const restartQuizBtn = document.getElementById('restart-quiz-btn');
+    const correctAnswersSpan = document.getElementById('correct-answers');
+    const totalQuestionsSpan = document.getElementById('total-questions');
+    const quizFeedback = document.getElementById('quiz-feedback');
+    
+    let currentQuestion = 0;
+    let score = 0;
+    let userAnswers = [];
+    
+    // Função para iniciar o quiz
+    function startQuiz() {
+        quizStart.style.display = 'none';
+        quizQuestions.style.display = 'block';
+        quizResults.style.display = 'none';
+        
+        currentQuestion = 0;
+        score = 0;
+        userAnswers = [];
+        
+        showQuestion();
+    }
+    
+    // Função para mostrar a pergunta atual
+    function showQuestion() {
+        // Limpar conteúdo anterior
+        quizQuestions.innerHTML = '';
+        
+        if (currentQuestion < quizData.length) {
+            const questionData = quizData[currentQuestion];
+            
+            // Criar elemento da pergunta
+            const questionElement = document.createElement('div');
+            questionElement.className = 'quiz-question';
+            
+            // Adicionar título da pergunta
+            const questionTitle = document.createElement('h3');
+            questionTitle.textContent = `${currentQuestion + 1}. ${questionData.question}`;
+            questionElement.appendChild(questionTitle);
+            
+            // Adicionar opções
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'quiz-options';
+            
+            questionData.options.forEach((option, index) => {
+                const optionItem = document.createElement('li');
+                optionItem.className = 'quiz-option';
+                optionItem.textContent = option;
+                optionItem.setAttribute('data-index', index);
+                
+                // Adicionar evento de clique
+                optionItem.addEventListener('click', function() {
+                    selectOption(this);
+                });
+                
+                optionsList.appendChild(optionItem);
+            });
+            
+            questionElement.appendChild(optionsList);
+            
+            // Adicionar navegação
+            const navElement = document.createElement('div');
+            navElement.className = 'quiz-navigation';
+            
+            // Botão anterior
+            if (currentQuestion > 0) {
+                const prevButton = document.createElement('button');
+                prevButton.className = 'cta-button';
+                prevButton.textContent = 'Anterior';
+                prevButton.addEventListener('click', prevQuestion);
+                navElement.appendChild(prevButton);
+            } else {
+                // Espaçador para manter o layout
+                const spacer = document.createElement('div');
+                navElement.appendChild(spacer);
+            }
+            
+            // Botão próximo/finalizar
+            const nextButton = document.createElement('button');
+            nextButton.className = 'cta-button';
+            nextButton.textContent = currentQuestion === quizData.length - 1 ? 'Finalizar' : 'Próximo';
+            nextButton.addEventListener('click', nextQuestion);
+            navElement.appendChild(nextButton);
+            
+            questionElement.appendChild(navElement);
+            
+            // Adicionar à seção de perguntas
+            quizQuestions.appendChild(questionElement);
+            
+            // Marcar opção se já respondida
+            if (userAnswers[currentQuestion] !== undefined) {
+                const options = document.querySelectorAll('.quiz-option');
+                options[userAnswers[currentQuestion]].classList.add('selected');
+            }
+        } else {
+            // Mostrar resultados
+            showResults();
+        }
+    }
+    
+    // Função para selecionar uma opção
+    function selectOption(optionElement) {
+        // Remover seleção anterior
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach(option => {
+            option.classList.remove('selected');
+        });
+        
+        // Adicionar seleção à opção clicada
+        optionElement.classList.add('selected');
+        
+        // Salvar resposta
+        const selectedIndex = parseInt(optionElement.getAttribute('data-index'));
+        userAnswers[currentQuestion] = selectedIndex;
+    }
+    
+    // Função para ir para a próxima pergunta
+    function nextQuestion() {
+        // Verificar se uma opção foi selecionada
+        if (userAnswers[currentQuestion] === undefined) {
+            alert('Por favor, selecione uma opção antes de continuar.');
+            return;
+        }
+        
+        currentQuestion++;
+        
+        if (currentQuestion < quizData.length) {
+            showQuestion();
+        } else {
+            showResults();
+        }
+    }
+    
+    // Função para voltar à pergunta anterior
+    function prevQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            showQuestion();
+        }
+    }
+    
+    // Função para mostrar os resultados
+    function showResults() {
+        // Calcular pontuação
+        score = 0;
+        userAnswers.forEach((answer, index) => {
+            if (answer === quizData[index].correct) {
+                score++;
+            }
+        });
+        
+        // Atualizar elementos de resultado
+        correctAnswersSpan.textContent = score;
+        totalQuestionsSpan.textContent = quizData.length;
+        
+        // Gerar feedback baseado na pontuação
+        let feedbackMessage = '';
+        const percentage = (score / quizData.length) * 100;
+        
+        if (percentage >= 80) {
+            feedbackMessage = 'Excelente! Você está muito bem preparado para situações de enchente.';
+        } else if (percentage >= 60) {
+            feedbackMessage = 'Bom trabalho! Você tem conhecimentos importantes sobre enchentes, mas ainda pode aprender mais.';
+        } else if (percentage >= 40) {
+            feedbackMessage = 'Você tem algum conhecimento sobre enchentes, mas precisa se informar mais para sua segurança.';
+        } else {
+            feedbackMessage = 'É importante aprender mais sobre prevenção e segurança em enchentes. Revise as informações do site.';
+        }
+        
+        quizFeedback.textContent = feedbackMessage;
+        
+        // Mostrar seção de resultados
+        quizQuestions.style.display = 'none';
+        quizResults.style.display = 'block';
+    }
+    
+    // Adicionar eventos aos botões do quiz
+    if (startQuizBtn) {
+        startQuizBtn.addEventListener('click', startQuiz);
+    }
+    
+    if (restartQuizBtn) {
+        restartQuizBtn.addEventListener('click', startQuiz);
+    }
+    
+    // Adicionar eventos de rolagem
+    window.addEventListener('scroll', highlightActiveLink);
+    window.addEventListener('scroll', toggleHeaderStyle);
+    window.addEventListener('scroll', animateOnScroll);
+    
+    // Chamar as funções uma vez para definir o estado inicial
+    highlightActiveLink();
+    toggleHeaderStyle();
+    animateOnScroll();
+    
+    // Adicionar rolagem suave ao clicar nos links do menu
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80, // Offset para compensar o header
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+});
